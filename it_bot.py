@@ -28,6 +28,9 @@ async def start(message:Message):
 async def about_us(message:Message):
     await message.reply("Geeks - это IT курсы в Оше , Кара-Балте, Бишкеке основанное в 2018 году")
 
+@dp.message(F.text == 'Адрес')
+async def location(message:Message):
+    await message.reply_location(latitude=40.51931846586533, longitude=72.80297788183063)
 
 async def main():
     await dp.start_polling(bot)
