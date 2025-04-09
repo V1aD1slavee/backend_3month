@@ -15,6 +15,16 @@ start_buttons = [
 ]
 
 start_keyboard = types.ReplyKeyboardMarkup(keyboard=start_buttons, resize_keyboard=True)
+
+courses = [
+    [types.KeyboardButton(text='Backend'), types.KeyboardButton(text='Frontend')],
+    [types.KeyboardButton(text='Android'), types.KeyboardButton(text='UX/UI')],
+    [types.KeyboardButton(text='Оставить заявку'), types.KeyboardButton(text='Назад')]
+]
+
+couses_leyboard = types.ReplyKeyboardMarkup(keyboard=courses, resize_keyboard=True)
+
+
 # ReplyKeyboardMarkup – клавиатура, которая показывается вместо основной
 # и не привязана ни к какому сообщению. Представляет собой шаблоны сообщений
 # (варианты ответа), которые выбираются путем нажатия на готовую кнопку.
