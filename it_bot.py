@@ -17,9 +17,9 @@ start_buttons = [
 start_keyboard = types.ReplyKeyboardMarkup(keyboard=start_buttons, resize_keyboard=True)
 
 courses_buttons = [
-    [types.KeyboardButton(text='Backend'), types.KeyboardButton(text='Frontend')],
-    [types.KeyboardButton(text='Android'), types.KeyboardButton(text='UX/UI')],
-    [types.KeyboardButton(text='Оставить заявку'), types.KeyboardButton(text='Назад')]
+    [types.KeyboardButton(text="Backend"), types.KeyboardButton(text="Frontend")],
+    [types.KeyboardButton(text="Android"), types.KeyboardButton(text="UX/UI")],
+    [types.KeyboardButton(text="Оставить заявку"), types.KeyboardButton(text="Назад")]
 ]
 
 couses_keyboard = types.ReplyKeyboardMarkup(keyboard=courses_buttons, resize_keyboard=True)
@@ -34,11 +34,11 @@ async def start(message:Message):
     await message.answer(f"Здравствуйте {message.from_user.full_name}", reply_markup=start_keyboard)
 
 
-@dp.message(F.text == 'О нас')
+@dp.message(F.text == "О нас")
 async def about_us(message:Message):
     await message.reply("Geeks - это IT курсы в Оше , Кара-Балте, Бишкеке основанное в 2018 году")
 
-@dp.message(F.text == 'Адрес')
+@dp.message(F.text == "Адрес")
 async def location(message:Message):
     await message.reply_location(latitude=40.51931846586533, longitude=72.80297788183063)
 
@@ -52,7 +52,7 @@ async def contact(message: Message):
 async def courses(message:Message):
     await message.reply("Вот наши курсы:", reply_markup=couses_keyboard)
 
-@dp.message(F.text == 'Backend')
+@dp.message(F.text == "Backend")
 async def backend(message:Message):
     await message.reply("Backend-разработчик\nСтань Backend-разработчиком с нуля за 5 месяцев и получи доступ к стажировке + помощь в трудоустройстве!")
 
@@ -71,6 +71,9 @@ async def backend(message: Message):
 async def backend(message: Message):
     await message.reply("UX/UI-дизайнер\nСтань UX/UI-дизайнером с нуля за 4 месяца и получи доступ к стажировке + помощь в трудоустройстве!")
 
+@dp.message(F.text == "Назад")
+async def back_to_menu(message:Message):
+    await message.reply("Вы вернулись в главное меню", reply_markup=start_keyboard)
 
 async def main():
     await dp.start_polling(bot)
