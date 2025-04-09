@@ -16,13 +16,13 @@ start_buttons = [
 
 start_keyboard = types.ReplyKeyboardMarkup(keyboard=start_buttons, resize_keyboard=True)
 
-courses = [
+courses_buttons = [
     [types.KeyboardButton(text='Backend'), types.KeyboardButton(text='Frontend')],
     [types.KeyboardButton(text='Android'), types.KeyboardButton(text='UX/UI')],
     [types.KeyboardButton(text='Оставить заявку'), types.KeyboardButton(text='Назад')]
 ]
 
-couses_leyboard = types.ReplyKeyboardMarkup(keyboard=courses, resize_keyboard=True)
+couses_keyboard = types.ReplyKeyboardMarkup(keyboard=courses_buttons, resize_keyboard=True)
 
 
 # ReplyKeyboardMarkup – клавиатура, которая показывается вместо основной
@@ -46,6 +46,11 @@ async def location(message:Message):
 @dp.message(F.text == "Контакты")
 async def contact(message: Message):
     await message.reply_contact(phone_number='+996505666038', first_name='Vladislav', last_name='Tropezonov')
+
+
+@dp.message(F.text == "Курсы")
+async def courses(message:Message):
+    await message.reply("Вот наши курсы:", reply_markup=couses_keyboard)
 
 
 async def main():
