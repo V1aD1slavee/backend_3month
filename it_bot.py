@@ -52,6 +52,25 @@ async def contact(message: Message):
 async def courses(message:Message):
     await message.reply("Вот наши курсы:", reply_markup=couses_keyboard)
 
+@dp.message(F.text == 'Backend')
+async def backend(message:Message):
+    await message.reply("Backend-разработчик\nСтань Backend-разработчиком с нуля за 5 месяцев и получи доступ к стажировке + помощь в трудоустройстве!")
+
+
+@dp.message(F.text == "Frontend")
+async def backend(message: Message):
+    await message.reply("Frontend-разработчик\nСтань Frontend-разработчиком с нуля за 5 месяцев и получи доступ к стажировке + помощь в трудоустройстве!")
+
+
+@dp.message(F.text == "Android")
+async def backend(message: Message):
+    await message.reply("Android-разработчик\nСтань Android-разработчиком с нуля за 7 месяцев и получи доступ к стажировке + помощь в трудоустройстве!")
+
+
+@dp.message(F.text == "UX/UI")
+async def backend(message: Message):
+    await message.reply("UX/UI-дизайнер\nСтань UX/UI-дизайнером с нуля за 4 месяца и получи доступ к стажировке + помощь в трудоустройстве!")
+
 
 async def main():
     await dp.start_polling(bot)
