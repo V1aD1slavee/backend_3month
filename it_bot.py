@@ -1,4 +1,4 @@
-from aiogram import Bot, Dispatcher, types
+from aiogram import Bot, Dispatcher, types, F
 from aiogram.types import Message
 from aiogram.filters import Command
 import logging, asyncio
@@ -22,6 +22,12 @@ start_keyboard = types.ReplyKeyboardMarkup(keyboard=start_buttons, resize_keyboa
 @dp.message(Command("start"))
 async def start(message:Message):
     await message.answer(f"Здравствуйте {message.from_user.full_name}", reply_markup=start_keyboard)
+
+
+@dp.message(F.text == 'О нас')
+async def about_us(message:Message):
+    await message.reply("Geeks - это IT курсы в Оше , Кара-Балте, Бишкеке основанное в 2018 году")
+
 
 async def main():
     await dp.start_polling(bot)
