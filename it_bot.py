@@ -38,6 +38,7 @@ async def start(message:Message):
 async def about_us(message:Message):
     await message.reply("Geeks - это IT курсы в Оше , Кара-Балте, Бишкеке основанное в 2018 году")
 
+
 @dp.message(F.text == "Адрес")
 async def location(message:Message):
     await message.reply_location(latitude=40.51931846586533, longitude=72.80297788183063)
@@ -51,6 +52,7 @@ async def contact(message: Message):
 @dp.message(F.text == "Курсы")
 async def courses(message:Message):
     await message.reply("Вот наши курсы:", reply_markup=couses_keyboard)
+
 
 @dp.message(F.text == "Backend")
 async def backend(message:Message):
@@ -70,6 +72,7 @@ async def backend(message: Message):
 @dp.message(F.text == "UX/UI")
 async def backend(message: Message):
     await message.reply("UX/UI-дизайнер\nСтань UX/UI-дизайнером с нуля за 4 месяца и получи доступ к стажировке + помощь в трудоустройстве!")
+
 
 @dp.message(F.text == "Назад")
 async def back_to_menu(message:Message):
