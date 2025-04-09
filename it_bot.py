@@ -32,6 +32,12 @@ async def about_us(message:Message):
 async def location(message:Message):
     await message.reply_location(latitude=40.51931846586533, longitude=72.80297788183063)
 
+
+@dp.message(F.text == "Контакты")
+async def contact(message: Message):
+    await message.reply_contact(phone_number='+996505666038', first_name='Vladislav', last_name='Tropezonov')
+
+
 async def main():
     await dp.start_polling(bot)
 
