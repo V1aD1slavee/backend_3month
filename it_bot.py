@@ -22,7 +22,7 @@ courses_buttons = [
     [types.KeyboardButton(text="Оставить заявку"), types.KeyboardButton(text="Назад")]
 ]
 
-couses_keyboard = types.ReplyKeyboardMarkup(keyboard=courses_buttons, resize_keyboard=True)
+courses_keyboard = types.ReplyKeyboardMarkup(keyboard=courses_buttons, resize_keyboard=True)
 
 
 # ReplyKeyboardMarkup – клавиатура, которая показывается вместо основной
@@ -51,7 +51,7 @@ async def contact(message: Message):
 
 @dp.message(F.text == "Курсы")
 async def courses(message:Message):
-    await message.reply("Вот наши курсы:", reply_markup=couses_keyboard)
+    await message.reply("Вот наши курсы:", reply_markup=courses_keyboard)
 
 
 @dp.message(F.text == "Backend")
@@ -84,6 +84,15 @@ async def application(message:Message):
     button = [[types.KeyboardButton(text='Отправить заявку', request_contact=True)]]
     keyboard = types.ReplyKeyboardMarkup(keyboard=button, resize_keyboard=True)
     await message.reply("Пожалуйста отправьте свои контактные данные", reply_markup=keyboard)
+
+
+@dp.message(F.contact)
+async def get_contact(message:Message):
+    contact_info = f"Заявка на курсы \nИмя: {message.contact.first_name}\nФамилия: {message.contact.last_name}\nТелефон: {message.contact.phone_number}"
+    await bot.send_message(chat_id=-1002307634503, text=contact_info)
+    await message.answer("Спасибо, что оставили заявку!")
+    await message.answer("Вы вернулись в главное меню", reply_markup=start_keyboard)
+
 
 async def main():
     await dp.start_polling(bot)
