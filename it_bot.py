@@ -78,6 +78,13 @@ async def backend(message: Message):
 async def back_to_menu(message:Message):
     await message.reply("Вы вернулись в главное меню", reply_markup=start_keyboard)
 
+
+@dp.message(F.text == "Оставить заявку")
+async def application(message:Message):
+    button = [[types.KeyboardButton(text='Отправить заявку', request_contact=True)]]
+    keyboard = types.ReplyKeyboardMarkup(keyboard=button, resize_keyboard=True)
+    await message.reply("Пожалуйста отправьте свои контактные данные", reply_markup=keyboard)
+
 async def main():
     await dp.start_polling(bot)
 
