@@ -23,6 +23,10 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS users(
 
 @dp.message(Command("start"))
 async def start(message:Message):
+    cursor.execute(f"SELECT id FROM users WHERE id = {message.from_user.id}")
+    users_result = cursor.fetchall()
+    if users_result == []:
+        pass
     cursor.execute("INSERT INTO users VALUES (?, ?, ?, ?, ?)", 
                    (message.from_user.id, message.from_user.first_name, message.from_user.last_name, message.from_user.username, time.ctime()))
     connect.commit()
