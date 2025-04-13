@@ -9,7 +9,7 @@ bot = Bot(token=token)
 dp = Dispatcher()
 logging.basicConfig(level=logging.INFO)
 
-connect = sqlite3.connect("user.db")
+connect = sqlite3.connect("notes.db")
 cursor = connect.cursor()
 
 cursor.execute(
@@ -25,5 +25,6 @@ async def start(message:Message):
     await message.answer(f'Привет {message.from_user.full_name}! Отправь мне заметку и я её сохраню')
 
 @dp.message(Command('view'))
-async def view_notes(message:Message):
-    cursor.execute("""""")
+async def view_notes(message:Message):          # плейсхолдер (заместитель)
+    cursor.execute("""SELECT note FROM notes WHERE id = ?""", (message.from_user.id))
+    
