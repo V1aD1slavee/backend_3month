@@ -13,7 +13,7 @@ connect = sqlite3.connect("notes.db")
 cursor = connect.cursor()
 
 cursor.execute(
-    """CREATE TABLE IF NOT EXISTS users(
+    """CREATE TABLE IF NOT EXISTS notes(
                id INT,                
                user_name VARCHAR(100),
                note TEXT
@@ -26,5 +26,25 @@ async def start(message:Message):
 
 @dp.message(Command('view'))
 async def view_notes(message:Message):          # плейсхолдер (заместитель)
-    cursor.execute("""SELECT note FROM notes WHERE id = ?""", (message.from_user.id))
-    
+    cursor.execute("""SELECT note FROM notes WHERE id = ?""", (message.from_user.id,))
+    notes = cursor.fetchall()
+    if notes:
+        response = '\n'.join([note[0] for note in notes])
+    else:
+        response = "У вас нет заметок"
+    await message.answer(response)
+
+@dp.message()
+async def save_note(message:Message):
+    cursor.execute(
+        "INSERT INTO notes (id, user_name,note) VALUES (?, ?, ?)",
+        (message.from_user.id, message.from_user.username, message.text),
+    )
+    connect.commit()
+    await message.answer("Заметка сохранена!")
+
+async def main():
+    await dp.start_polling(bot)
+
+if __name__ == "__main__":
+    asyncio.run(main())
