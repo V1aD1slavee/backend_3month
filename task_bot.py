@@ -30,7 +30,7 @@ async def add(message:Message):
     await message.answer("Отправьте свою задачу сюда, и мы её сохраним")
 
 
-@dp.message()
+@dp.message(F.text())
 async def add_task(message:Message):
     cursor.execute("INSERT INTO tasks (user_id, task) VALUES (?, ?)", (message.from_user.id, message.text))
     connect.commit()
@@ -39,7 +39,7 @@ async def add_task(message:Message):
 
 @dp.message(Command('view'))
 async def view_tasks(message:Message):
-    cursor.execute("SELECT task FROM tasks WHERE user_id = ?", (message.from_user.id))
+    cursor.execute("SELECT task FROM tasks WHERE user_id = ?", (message.from_user.id,))
     user_tasks = cursor.fetchall()
     if user_tasks:
         response = "\n".join(task[0] for task in user_tasks)
