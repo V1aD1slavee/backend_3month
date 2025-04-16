@@ -37,6 +37,16 @@ async def add_task(message:Message):
     await message.reply("Задача сохрнена")
 
 
+@dp.message(Command('view'))
+async def view_tasks(message:Message):
+    cursor.execute("SELECT task FROM tasks WHERE user_id = ?", (message.from_user.id))
+    user_tasks = cursor.fetchall()
+    if user_tasks:
+        response = "\n".join(task[0] for task in user_tasks)
+    else:
+        response = "У вас нет задач на данный момент"
+
+    await message.answer(response)
 
 async def main():
     await dp.start_polling(bot)
