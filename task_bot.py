@@ -17,3 +17,16 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS tasks(
                user_id INT,
                task TEXT
 )""")
+
+
+@dp.message(Command('start'))
+async def start(message:Message):
+    await message.answer(
+        f"Здравствуйте {message.from_user.full_name}! Я бот для управления задачами.\nИспользуй комманду:\n/add - что бы добавить задачу\n/view - что бы просмотреть все задачи\n/delete - что бы удалить задачу"
+    )
+
+async def main():
+    await dp.start_polling(bot)
+
+if __name__ == '__main__':
+    asyncio.run(main())
