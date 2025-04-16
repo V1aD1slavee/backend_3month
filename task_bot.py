@@ -25,6 +25,19 @@ async def start(message:Message):
         f"Здравствуйте {message.from_user.full_name}! Я бот для управления задачами.\nИспользуй комманду:\n/add - что бы добавить задачу\n/view - что бы просмотреть все задачи\n/delete - что бы удалить задачу"
     )
 
+@dp.message(Command('add'))
+async def add(message:Message):
+    await message.answer("Отправьте свою задачу сюда, и мы её сохраним")
+
+
+@dp.message()
+async def add_task(message:Message):
+    cursor.execute("INSERT INTO tasks (user_id, task) VALUES (?, ?)", (message.from_user.id, message.text))
+    connect.commit()
+    await message.reply("Задача сохрнена")
+
+
+
 async def main():
     await dp.start_polling(bot)
 
