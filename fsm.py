@@ -33,7 +33,18 @@ async def age(message:Message, state:FSMContext):
 @dp.message(Form.age)
 async def process_age(message:Message , state:FSMContext)
     if not message.text.isdigit():
-        pass
+        await message.answer("Пожалуйста введите корректный возраст")
+        return
+    
+    age = int(message.text)
+    if age < 18:
+        await state.clear()
+        await message.answer("Извените, этот бот доступен только лицам достигшим 18 лет!")
+        return
+    
+    await state.update_data(age = age)
+    await state.set_state(Form.photo)
+    await message.answer("Пожалуйста отправьте мне свою фотографию")
 
 async def main():
     await dp.start_polling(bot)
