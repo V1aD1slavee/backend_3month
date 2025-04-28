@@ -27,8 +27,13 @@ async def start(message:Message, state:FSMContext):
 @dp.message(Form.age)
 async def age(message:Message, state:FSMContext):
     await state.update_data(name = message.text)
+    await state.set_state(Form.age)
     await message.answer("Сколько тебе лет?")
 
+@dp.message(Form.age)
+async def process_age(message:Message , state:FSMContext)
+    if not message.text.isdigit():
+        pass
 
 async def main():
     await dp.start_polling(bot)
