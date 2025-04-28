@@ -39,12 +39,28 @@ async def process_age(message:Message , state:FSMContext)
     age = int(message.text)
     if age < 18:
         await state.clear()
-        await message.answer("Извените, этот бот доступен только лицам достигшим 18 лет!")
+        await message.answer("Извините, этот бот доступен только лицам достигшим 18 лет!")
         return
     
     await state.update_data(age = age)
     await state.set_state(Form.photo)
     await message.answer("Пожалуйста отправьте мне свою фотографию")
+
+@dp.message(Form.photo, F.content_type.in_(['photo']))
+async def process_photo(message:Message , state:FSMContext):
+    data = await state.get_data()
+    name = data.get('name')
+    age = data.get('age')
+    photo = message.photo[-1].file_id
+
+    await bot.send_message(
+        message.chat.id,
+        f"Твоё имя: {name}\nТвой возраст: {age}",
+
+    )
+    await bot.send_photo(message.chat.id, photo)
+    await state.clear()
+    await message.answer("Спасибо! Все данные сохраненны")
 
 async def main():
     await dp.start_polling(bot)
