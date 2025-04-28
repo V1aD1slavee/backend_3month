@@ -24,6 +24,11 @@ async def start(message:Message, state:FSMContext):
     await state.set_state(Form.name)
     await message.reply("Привет , как тебя зовут?")
 
+@dp.message(Form.age)
+async def age(message:Message, state:FSMContext):
+    await state.update_data(name = message.text)
+    await message.answer("Сколько тебе лет?")
+
 
 async def main():
     await dp.start_polling(bot)
