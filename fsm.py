@@ -8,7 +8,7 @@ import logging, asyncio
 from config import token
 
 bot = Bot(token=token)
-storage = MemoryStorage
+storage = MemoryStorage()
 dp = Dispatcher(storage=storage)
 
 logging.basicConfig(level=logging.INFO)
@@ -31,7 +31,7 @@ async def age(message:Message, state:FSMContext):
     await message.answer("Сколько тебе лет?")
 
 @dp.message(Form.age)
-async def process_age(message:Message , state:FSMContext)
+async def process_age(message:Message , state:FSMContext):
     if not message.text.isdigit():
         await message.answer("Пожалуйста введите корректный возраст")
         return
@@ -47,7 +47,7 @@ async def process_age(message:Message , state:FSMContext)
     await message.answer("Пожалуйста отправьте мне свою фотографию")
 
 @dp.message(Form.photo, F.content_type.in_(['photo']))
-async def process_photo(message:Message , state:FSMContext):
+async def process_photo(message:Message, state:FSMContext):
     data = await state.get_data()
     name = data.get('name')
     age = data.get('age')
