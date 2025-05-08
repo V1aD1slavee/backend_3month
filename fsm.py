@@ -24,9 +24,10 @@ async def start(message:Message, state:FSMContext):
     await state.set_state(Form.name)
     await message.reply("Привет , как тебя зовут?")
 
-@dp.message(Form.age)
+@dp.message(Form.name)
 async def age(message:Message, state:FSMContext):
     await state.update_data(name = message.text)
+    await message.reply(f"Приятно познакомиться {message.text}!")
     await state.set_state(Form.age)
     await message.answer("Сколько тебе лет?")
 
@@ -39,7 +40,7 @@ async def process_age(message:Message , state:FSMContext):
     age = int(message.text)
     if age < 18:
         await state.clear()
-        await message.answer("Извините, этот бот доступен только лицам достигшим 18 лет!")
+        await message.answer("Извините, этот бот доступен только лицам достигшим 18 лет! Либо повторите ещё раз /start")
         return
     
     await state.update_data(age = age)
@@ -62,7 +63,14 @@ async def process_photo(message:Message, state:FSMContext):
     await state.clear()
     await message.answer("Спасибо! Все данные сохраненны")
 
+@dp.message(Command('cencel'))
+@dp.message(F.text.lower() == 'отмена')
+async def cmd_cancel(message:Message, state:FSMContext):
+    await state.clear()
+    await message.answer("Процесс отменён. Что бы начать заново введите /start")
+
 async def main():
+    await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
