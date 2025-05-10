@@ -57,7 +57,6 @@ async def process_photo(message:Message, state:FSMContext):
     await bot.send_message(
         message.chat.id,
         f"Твоё имя: {name}\nТвой возраст: {age}",
-
     )
     await bot.send_photo(message.chat.id, photo)
     await state.clear()
