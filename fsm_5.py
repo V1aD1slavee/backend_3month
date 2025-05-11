@@ -7,7 +7,7 @@ from aiogram.types import Message
 
 from db import DataBase
 from config import token
-import logging
+import logging, asyncio
 
 bot = Bot(token=token)
 storage = MemoryStorage()
@@ -31,3 +31,19 @@ async def process_username(message:Message, state:FSMContext):
     db.add_user(message.from_user.id, username)
     await state.clear()
     await message.answer(f"Приятно пзнакомиться {username}!")
+
+@dp.message(Command('me'))
+async def me(message:Message):
+    user = db.get_user(message.from_user.id)
+    if user:
+        await message.answer(f"Ты зарегестрирован как {user[2]}")
+    else:
+        await message.answer("Вы ещё не зарегестрированы")
+        await start(message)
+
+async def main():
+    await bot.delete_webhook(drop_pending_updates=True)
+    await dp.start_polling(bot)
+
+if __name__ == '__main__':
+    asyncio.run(main())
