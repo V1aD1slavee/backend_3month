@@ -19,4 +19,4 @@ class DataBase:
 
     def get_user(self, user_id):
         with self.connection:
-            self.cursor.execute("SELECT * FROM users WHERE user_id = ?", (user_id)).fetchone()
+            return self.cursor.execute("SELECT * FROM users WHERE user_id = ?", (user_id,)).fetchone()
