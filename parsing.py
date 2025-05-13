@@ -10,7 +10,7 @@ with open("news.txt", 'w', encoding='UTF-8') as file:
         # print(response)
 
         soup = BeautifulSoup(response.text, 'lxml')
-        all_news = soup.find_all('div', class_='title')
+        all_news = soup.find_all('div', class_='title'
         # print(all_news)
 
         for news in all_news:
