@@ -13,4 +13,11 @@ bot = Bot(token=token)
 storage = MemoryStorage()
 dp = Dispatcher(storage=storage)
 
-logging.basicConfig()
+logging.basicConfig(level=logging.INFO)
+
+class Form(StatesGroup):
+    number_of_pages = State()
+
+@dp.message(CommandStart())
+async def start(message:Message, state:FSMContext):
+    await message.answer("Привет, я бот по парсингу сайтов")
