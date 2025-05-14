@@ -9,7 +9,7 @@ class DataBase:
     def create_table(self):
         with self.connection:
             self.cursor.execute("""CREATE TABLE IF NOT EXISTS users(
-                                id INT AUTO_INCREMENT PRIMARY KEY,
+                                id INTEGER PRIMARY KEY AUTOINCREMENT,
                                 user_id INTEGER NOT NULL,
                                 username TEXT)""")
             
