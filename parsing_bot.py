@@ -57,7 +57,7 @@ async def start(message:Message):
         "/stop — остановить парсинг\n\n"
         "⚠️ Новости будут приходить каждые 30 секунд.\n"
         "❌ Парсинг остановится только по команде /stop.")
-    
+
 @dp.message(Command('news'))
 async def start_parsing(message:Message):
     user_id = message.chat.id
@@ -70,3 +70,16 @@ async def start_parsing(message:Message):
     user_threads[user_id] = thread
     thread.start()
     await message.answer("Начинаю парсить все страницы сайта 24.kg...")
+
+@dp.message(Command('news'))
+async def stop_parsing(message:Message):
+    user_id = message.chat.id
+    if user_id not in user_threads:
+        await message.answer("Парсинг ещё не запущен")
+        return
+
+    stop_flags[user_id] = True
+    user_threads[user_id].join()
+    del user_threads[user_id]
+    del stop_flags[user_id]
+    await message.answer("🛑 Парсинг остановлен")
