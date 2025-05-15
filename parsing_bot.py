@@ -25,7 +25,6 @@ def parse_loop(user_id):
             url = "https://24.kg"
         else:
             url = f"https://24.kg/page_{page}"
-        
 
         try:
             response = requests.get(url=url)
@@ -33,19 +32,20 @@ def parse_loop(user_id):
                 page = 1
                 continue
 
-
             soup = BeautifulSoup(response.text, "lxml")
             all_news = soup.find_all('div', class_='title')
 
             if all_news:
-                text = f"📄 Страница {page}\n\n" + "\n".join(f"• {title}" for title in all_news)
+                text = f"📄 Страница {page}\n\n" + "\n".join(
+                    f"• {title.text.strip()}" for title in all_news
+                )
                 asyncio.run_coroutine_threadsafe(
                     bot.send_message(user_id, text),
                     loop
                 )
 
             page += 1
-            time.sleep(5)
+            time.sleep(30)
 
         except Exception as e:
             print(f"Ошибка на странице {page}: {e}")
@@ -74,7 +74,7 @@ async def start_parsing(message:Message):
     thread.start()
     await message.answer("Начинаю парсить все страницы сайта 24.kg...")
 
-@dp.message(Command('news'))
+@dp.message(Command('stop'))
 async def stop_parsing(message:Message):
     user_id = message.chat.id
     if user_id not in user_threads:
