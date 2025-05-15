@@ -9,6 +9,9 @@ from config import token
 bot = Bot(token=token)
 dp = Dispatcher()
 
+loop = asyncio.new_event_loop()
+asyncio.set_event_loop(loop)
+
 logging.basicConfig(level=logging.INFO)
 
 user_threads = {}  # хранит активные потоки
@@ -38,7 +41,7 @@ def parse_loop(user_id):
                 text = f"📄 Страница {page}\n\n" + "\n".join(f"• {title}" for title in all_news)
                 asyncio.run_coroutine_threadsafe(
                     bot.send_message(user_id, text),
-                    dp.loop
+                    loop
                 )
 
             page += 1
@@ -85,7 +88,8 @@ async def stop_parsing(message:Message):
     await message.answer("🛑 Парсинг остановлен")
 
 async def main():
-    dp.start_polling(bot)
+    await bot.delete_webhook(drop_pending_updates=True)
+    await dp.start_polling(bot)
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    loop.run_until_complete(main())
