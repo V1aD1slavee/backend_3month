@@ -83,3 +83,9 @@ async def stop_parsing(message:Message):
     del user_threads[user_id]
     del stop_flags[user_id]
     await message.answer("🛑 Парсинг остановлен")
+
+async def main():
+    dp.start_polling(bot)
+
+if __name__ == '__main__':
+    asyncio.run(main())
