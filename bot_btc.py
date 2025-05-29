@@ -18,4 +18,9 @@ def get_btc_price():
     else:
         return "Не удалось получить цену биткоина"
 
+async def schedule():
+    while monitoring:
+        message = await get_btc_price()
+        await bot.send_message(chat_id, message)
+        await asyncio.sleep(1)
 
