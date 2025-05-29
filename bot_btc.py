@@ -24,3 +24,13 @@ async def schedule():
         await bot.send_message(chat_id, message)
         await asyncio.sleep(1)
 
+@dp.message(CommandStart())
+async def start(message:Message):
+    await message.answer(f"Привет, {message.from_user.full_name}")
+    await message.answer("")
+
+@dp.message(Command('btc'))
+async def btc(message:Message):
+    global chat_id, monitoring
+    chat_id = message.chat.id
+    monitoring = True
