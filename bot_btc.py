@@ -27,7 +27,7 @@ async def schedule():
 @dp.message(CommandStart())
 async def start(message:Message):
     await message.answer(f"Привет, {message.from_user.full_name}")
-    await message.answer("")
+    await message.answer(f"Это бот для мониторинга цены биткоина\nВот комманды для использования:\n/btc - начать мониторинг цены\n/stop - закончить мониторинг цены")
 
 @dp.message(Command('btc'))
 async def btc(message:Message):
@@ -42,3 +42,20 @@ async def stop(message:Message):
     global monitoring
     monitoring = False
     await message.answer("Мониторинг цены остановлен")
+
+async def on(dp):
+    await bot.set_my_commands(
+        [
+            BotCommand(command="/start", description="Start bot"),
+            BotCommand(command="/btc", description="Start BTC monitoring"),
+            BotCommand(command="/stop", description="Stop monitoring")
+        ]
+    )
+
+async def main():
+    dp.startup.register(on)
+    await bot.delete_webhook(drop_pending_updates=True)
+    await dp.start_polling(bot)
+
+if __name__ == '__main__':
+    asyncio.run(main())
