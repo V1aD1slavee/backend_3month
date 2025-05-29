@@ -43,7 +43,7 @@ async def stop(message:Message):
     monitoring = False
     await message.answer("Мониторинг цены остановлен")
 
-async def on(dp):
+async def on():
     await bot.set_my_commands(
         [
             BotCommand(command="/start", description="Start bot"),
@@ -51,6 +51,8 @@ async def on(dp):
             BotCommand(command="/stop", description="Stop monitoring")
         ]
     )
+    logging.info("БОТ ЗАПУЩЕН")
+    aioschedule.every(1).seconds.do(schedule())
 
 async def main():
     dp.startup.register(on)
