@@ -9,14 +9,17 @@ bot = Bot(token=token)
 dp = Dispatcher()
 logging.basicConfig(level=logging.INFO)
 
-def get_btc_price():
-    url = "https://api.binance.com/api/v3/avgPrice?symbol=BTCUSDT"
-    response = requests.get(url=url).json()
-    price = response.get('price')
-    if price:
-        return f"Стоимость биткоина на {time.ctime()}, {price} долларов"
-    else:
-        return "Не удалось получить цену биткоина"
+monitoring = False
+chat_id = None
+
+async def get_btc_price():
+        url = "https://api.binance.com/api/v3/avgPrice?symbol=BTCUSDT"
+        response = requests.get(url=url).json()
+        price = response.get('price')
+        if price:
+            return f"Стоимость биткоина на {time.ctime()}, {price} долларов"
+        else:
+            return "Не удалось получить цену биткоина"
 
 async def schedule():
     while monitoring:
@@ -52,7 +55,7 @@ async def on():
         ]
     )
     logging.info("БОТ ЗАПУЩЕН")
-    aioschedule.every(1).seconds.do(schedule())
+    aioschedule.every(1).seconds.do(schedule)
 
 async def main():
     dp.startup.register(on)
