@@ -10,7 +10,10 @@ def get_btc_price():
     print("======BTC======")
     url = "https://api.binance.com/api/v3/avgPrice?symbol=BTCUSDT"
     response = requests.get(url=url).json()
-    print(response)
+    # print(response)
+    price = response.get('price')
+
+    print(f"Стоимость биткоина {price}, {time.ctime()}")
 
 # get_btc_price()
 # schedule.every(2).seconds.do(test)
