@@ -34,3 +34,11 @@ async def btc(message:Message):
     global chat_id, monitoring
     chat_id = message.chat.id
     monitoring = True
+    await message.answer("Начало мониторинга цены...")
+    await schedule()
+
+@dp.message(Command('stop'))
+async def stop(message:Message):
+    global monitoring
+    monitoring = False
+    await message.answer("Мониторинг цены остановлен")
