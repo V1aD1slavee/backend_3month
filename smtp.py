@@ -6,4 +6,4 @@ def send_email(to_email, subject, message):
     password = smtp_sender_password
 
     server = smtplib.SMTP('smtp.gmail.com', 587)
-    
+    server.starttls()
